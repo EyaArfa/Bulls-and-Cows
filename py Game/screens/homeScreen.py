@@ -1,14 +1,10 @@
 import pygame
 from button import button
+from window import window
 pygame.init() #initialize the pygame library
-
-screen=pygame.display.set_mode((500,500))
-pygame.display.set_caption('vache&taureau')
-Icon = pygame.image.load('C:/Users/medou/Desktop/py Game/images/icon.png')
-pygame.display.set_icon(Icon)
-
+fen=window()
 running=True
-button1=button('ouss',(100,100),30,'green','',screen)
+button1=button('ouss',(100,100),30,'green','',fen.screen)
 while running:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
