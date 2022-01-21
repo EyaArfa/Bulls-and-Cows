@@ -1,30 +1,48 @@
-from turtle import Screen
 import pygame
 pygame.init()
 
-class Button():
-	def __init__(self, image, x_pos, y_pos, text_input,screen,main_font):
-		self.image = image
-		self.x_pos = x_pos
-		self.y_pos = y_pos
-		self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
-		self.text_input = text_input
-		self.text = main_font.render(self.text_input, True, "white")
-		self.screen = screen
-		self.main_font = main_font
-		self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+class button:
+    def __init__(self, text, pos, font, image,bg="black", feedback="",screen=pygame.display.set_mode((500, 600))):
+        self.x, self.y = pos
+        self.font = pygame.font.SysFont("Arial", font)
+        self.image=image
+        self.rect=self.image.get_rect(center=(self.x,self.y))
+        if feedback == "":
+            self.feedback = text
+        else:
+            self.feedback = feedback
+        self.change_text(text, bg)
+        self.screen=screen
+        
         
 
-	def update(self):
-		self.screen.blit(self.image, self.rect)
-		self.screen.blit(self.text, self.text_rect)
+    def change_text(self, text, bg="black"):
+        self.text = self.font.render(text, 1, pygame.Color("White"))
+        self.size = self.text.get_size()
+        self.surface = pygame.Surface(self.size)
+        self.surface.fill(bg)
+        self.surface.blit(self.text, (0, 0))
+        self.rect = pygame.Rect(self.x, self.y, self.size[0], self.size[1])
 
-	def checkForInput(self, position):
-		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-			print("Button Press!")
+    def show(self):
+        self.screen.blit(self.surface, (self.x, self.y))
 
-	def changeColor(self, position):
-		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-			self.text = self.main_font.render(self.text_input, True, "green")
-		else:
-			self.text = self.main_font.render(self.text_input, True, "white")
+    def click(self, event):
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    self.change_text(self.feedback, bg="red")
+    def clickExit(self, event):
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    pygame.quit()
+
+    def changeColor(self, position):
+        if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+            self.change_text(self.feedback,'yellow')
+        else:
+            self.change_text(self.feedback,'green')
+	        
