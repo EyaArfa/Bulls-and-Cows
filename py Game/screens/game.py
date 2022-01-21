@@ -10,7 +10,7 @@ from window import window
 import pygame
 import sys
 fen=window()
-background=pygame.image.load(r'C:\Users\EYA\Documents\Ing\FIA1\ParadigmeDeProgrammation\TP\MyPyGame-main\MyPyGame\py Game\images\Sans titre.png')
+background=pygame.image.load(r'F:\oussema\study\ingenierie\1er\pyGame\MyPyGame\py Game\images\Sans titre.png')
 base_font = pygame.font.Font(None, 32)
 user_text = ''
 input_rect = pygame.Rect(200, 200, 140, 32)
