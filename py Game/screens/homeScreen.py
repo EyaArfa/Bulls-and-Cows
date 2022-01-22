@@ -6,12 +6,13 @@ import os
 
 user32 = ctypes.windll.user32
 width1, height1 = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
-pygame.init() #initialize the pygame library
+ #initialize the pygame library
 width=(width1//3)*2
 height=(height1//3)*2
 x=(width1//2)-(width//2)
 y=height1-height
 screen = pygame.display.set_mode((width, height))
+
 os.environ['SDL_VIDEO_WINDOW_POS'] = '%i,%i' % (x,y)
 os.environ['SDL_VIDEO_CENTERED'] = '0'
 
@@ -30,12 +31,20 @@ button2=button((width//2,height-(height//5)-20),30,play2,screen)
 play3= pygame.image.load('py Game\images\HS.png')
 button3=button((width//2,height-(height//5)+80),30,play3,screen)
 
+play4= pygame.image.load('py Game\images\sound.png')
+button4=button((width-60,height-(height//5)-50),30,play4,screen)
+
+play5= pygame.image.load('py Game\images\\about.png')
+button5=button((width-60,height-(height//5)+50),30,play5,screen)
+
+pygame.init()
 while running:
-    screen.fill((0,0,0))
     screen.blit(background,(0,0))
     button1.draw()
     button2.draw()
     button3.draw()
+    button4.draw()
+    button5.draw()
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             running=False
