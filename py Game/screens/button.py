@@ -26,6 +26,18 @@ class button:
     def show(self):
         self.screen.blit(self.surface, (self.x, self.y))
 
+    def music(self, event,bol):
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    if(bol):
+                        pygame.mixer.music.pause()
+                        return False
+                    else:
+                        pygame.mixer.music.unpause()
+                        return True
+
     def click(self, event):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:

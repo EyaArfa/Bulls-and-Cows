@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 from button import button
 from window import window
 import ctypes
@@ -22,6 +23,10 @@ background = pygame.transform.scale(background, (width, height))
 
 running=True
 
+mixer.init()
+mixer.music.load('py Game\music\\bensound-summer_mp3_music.mp3')
+mixer.music.play()
+
 play1= pygame.image.load('py Game\images\start.png')
 button1=button((width//2,height-(height//5)-120),30,play1,screen)
 
@@ -34,32 +39,37 @@ button3=button((width//2,height-(height//5)+80),30,play3,screen)
 play4= pygame.image.load('py Game\images\sound.png')
 button4=button((width-60,height-(height//5)-50),30,play4,screen)
 
+#play6= pygame.image.load('py Game\images\\mute.png')
+#button6=button((width-60,height-(height//5)-50),30,play6,screen)
+
 play5= pygame.image.load('py Game\images\\about.png')
 button5=button((width-60,height-(height//5)+50),30,play5,screen)
-
+bol=True
 pygame.init()
+screen.blit(background,(0,0))
+button1.draw()
+button2.draw()
+button3.draw()
+button4.draw()
+button5.draw()
 while running:
-    screen.blit(background,(0,0))
-    button1.draw()
-    button2.draw()
-    button3.draw()
-    button4.draw()
-    button5.draw()
+    
+    #button6.draw()
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             running=False
         button1.click(event)
         button2.click(event)
         button3.clickExit(event)
+        button4.music(event,bol)
+    pygame.display.update()
+    pygame.display.flip()    
     # button1.show()
     # button2.show()
     # button3.show()
     # button1.changeColor(pygame.mouse.get_pos())
     # button2.changeColor(pygame.mouse.get_pos())
-    # button3.changeColor(pygame.mouse.get_pos())
-
-    pygame.display.update()
-    pygame.display.flip()
+    # button3.changeColor(pygame.mouse.get_pos())    
 pygame.quit()
 
 
