@@ -53,6 +53,7 @@ class button:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
                     play()
+
     def clickHigh(self, event):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
