@@ -6,9 +6,9 @@ from tkinter import ttk
 from about import about
 from highScore import high
 import var
-
+from levels import *
 pygame.init()
-
+music=True
 
 class button:
     def __init__(self, pos, font, image,screen=pygame.display.set_mode((500, 600))):
@@ -34,12 +34,14 @@ class button:
         self.screen.blit(self.surface, (self.x, self.y))
 
     def music(self, event,bol,width,height):
+        global music
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
                     if(bol):
                         pygame.mixer.music.pause()
+                        music=False
                         var.bol=False
                         b=pygame.draw.line(self.screen,'white',(width-100,height-(height//5)-90),(width+60,height-(height//5)+20),10)
                     else:
@@ -52,8 +54,7 @@ class button:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
-                    play()
-
+                    levels(music)
     def clickHigh(self, event):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
