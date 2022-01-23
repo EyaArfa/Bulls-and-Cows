@@ -34,7 +34,7 @@ button1=button((width//2,height-(height//5)-120),30,play1,screen)
 play2= pygame.image.load('py Game\images\HS.png')
 button2=button((width//2,height-(height//5)-20),30,play2,screen)
 
-play3= pygame.image.load('py Game\images\HS.png')
+play3= pygame.image.load('py Game\images\exit.png')
 button3=button((width//2,height-(height//5)+80),30,play3,screen)
 
 play4= pygame.image.load('py Game\images\sound.png')

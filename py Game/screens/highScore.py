@@ -3,7 +3,7 @@
 from tkinter import *
 from tkinter.ttk import *
 def high():
-    f = open("py Game\cache\score.txt")
+    f = open(r"py Game\cache\score.txt")
     l=f.readlines()
     # creates a Tk() object
     master = Tk()
