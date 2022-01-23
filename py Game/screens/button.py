@@ -6,7 +6,7 @@ from tkinter import ttk
 from about import about
 from highScore import high
 import var
-from levels import *
+import niv
 pygame.init()
 music=True
 
@@ -18,18 +18,6 @@ class button:
         self.screen=screen
     def draw(self):
         self.screen.blit(self.image,(self.rect.x,self.rect.y))
-    
-
-        
-        
-
-    # def change_text(self, text, bg="black"):
-    #     self.text = self.font.render(text, 1, pygame.Color("White"))
-    #     self.size = self.text.get_size()
-    #     self.surface = pygame.Surface(self.size)
-    #     self.surface.blit(self.text, (0, 0))
-    #     self.rect = pygame.Rect(self.x, self.y, self.size[0], self.size[1])
-
     def show(self):
         self.screen.blit(self.surface, (self.x, self.y))
 
@@ -54,19 +42,15 @@ class button:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
-                    levels(music)
+                    pygame.quit()
+                    niv.levels(music)
     def clickHigh(self, event):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
                     high()
-    def clickExit(self, event):
-        x, y = pygame.mouse.get_pos()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if pygame.mouse.get_pressed()[0]:
-                if self.rect.collidepoint(x, y):
-                    pygame.quit()
+    
     def about(self,event):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:

@@ -1,7 +1,6 @@
 import pygame
 from pygame import mixer
 from button import button
-from window import window
 import ctypes
 import os
 import var
@@ -34,14 +33,11 @@ button1=button((width//2,height-(height//5)-120),30,play1,screen)
 play2= pygame.image.load('py Game\images\HS.png')
 button2=button((width//2,height-(height//5)-20),30,play2,screen)
 
-play3= pygame.image.load('py Game\images\exit.png')
-button3=button((width//2,height-(height//5)+80),30,play3,screen)
 
 play4= pygame.image.load('py Game\images\sound.png')
 button4=button((width-60,height-(height//5)-50),30,play4,screen)
 
-#play6= pygame.image.load('py Game\images\\mute.png')
-#button6=button((width-60,height-(height//5)-50),30,play6,screen)
+
 
 play5= pygame.image.load('py Game\images\\about.png')
 button5=button((width-60,height-(height//5)+50),30,play5,screen)
@@ -51,7 +47,6 @@ pygame.init()
 screen.blit(background,(0,0))
 button1.draw()
 button2.draw()
-button3.draw()
 button4.draw()
 button5.draw()
 while running:
@@ -60,9 +55,9 @@ while running:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             running=False
+            
         button1.click(event)
         button2.clickHigh(event)
-        button3.clickExit(event)
         button4.music(event,var.bol,width=width,height=height)
         button5.about(event)
     pygame.display.update()

@@ -1,5 +1,6 @@
+from fileinput import close
 from random  import randint
-from tkinter import ANCHOR, CENTER, Button, Canvas, Label, PhotoImage, messagebox
+from tkinter import ANCHOR, CENTER, Button, Canvas, Label, PhotoImage, Toplevel, messagebox
 from pygame import mixer
 import tkinter.font
 from PIL import Image,ImageTk
@@ -8,11 +9,63 @@ m=0
 s=0
 number=""
 trial=0
+l=[]
+def done(title,msg):
+    response=messagebox.askquestion(title,msg)
+    print(response)
+    if response==messagebox.YES:
+        root.destroy()
+        play(sound,m,s)
+    else:
+        root.destroy()
+def timesup(title,msg):
+    done(title,msg)
+def Desired_font(x):
+    return (tkinter.font.Font( family = "Comic Sans MS", size = x, weight = "bold"))
+
+class temps:
+    def __init__(self, parent,min,sec):
+        # variable storing time
+        self.state=True
+        self.canva=parent
+        self.seconds=sec
+        self.minutes=min
+        # label displaying time
+        self.label = tkinter.Label(parent, text="{0:2d}:{0:2d}".format(min,sec), font=Desired_font(30),bg="#A7DFEE",fg="white")
+        self.label.pack()
+        parent.create_window(75,35,anchor="center",window=self.label)
+        # start the timer
+        self.label.after(1000, self.refresh_label)
+
+    def refresh_label(self):
+        """ refresh the content of the label every second """
+        # increment the time
+        if(self.state):
+            time=self.minutes*60+self.seconds
+            if(time==0):
+                timesup("LOST","TIME'S UP")
+            print(time)
+            time -= 1
+            print(time)
+            min,sec=divmod(time,60)
+            self.seconds=sec
+            self.minutes=min
+            print(min,sec)
+            remaining="{:02d}:{:02d}".format(min,sec)
+            # display the new time
+            self.label.configure(text=remaining)
+            # request tkinter to call self.refresh after 1s (the delay is given in ms)
+            self.label.after(1000, self.refresh_label)
+    def stop(self):
+      if(self.state):
+        self.state=False
+      
+
+
 # cs=randint(1000, 9999)
 # ch=str(cs)
 # print(ch)
 ch=''
-root=tkinter.Tk()
 
 def error():
     messagebox.showerror("error","ENTER 4 DIGIT NUMBER")
@@ -30,8 +83,19 @@ def clear(answer,canva1):
     canva1.itemconfig(answer,text=number) 
     print(number) 
 
-def Desired_font(x):
-    return (tkinter.font.Font( family = "Comic Sans MS", size = x, weight = "bold"))
+def showHistory():
+    top = Toplevel()
+    top.geometry("300x200")
+    top.title('Highest scores')
+    label = tkinter.Label(top,
+            text ='Players:')
+    label.pack(pady = 10)
+    for line in l:
+        label = tkinter.Label(top,
+        text =line.rstrip("\n"))
+        label.pack(pady = 0)
+    
+    
 
 def bullandcow(min,sec):
     
@@ -52,14 +116,15 @@ def bullandcow(min,sec):
     bg=PhotoImage(file='py Game\images\Sans titre.png')
     canva1.create_image( 0, 0, image = bg, anchor = "nw")
     
-    
+    if(min!=0):
+        tmp=temps(canva1,min,sec)
     answer=canva1.create_text(260,140,text='',font=Desired_font(50),fill="#F1E755")
     # # Read  Image1
     image1 = (Image.open(r"py Game\images\num1.png"))
     # Resize the image using resize() method
     resize_image = image1.resize((50, 50))
     img_btn1 = ImageTk.PhotoImage(resize_image)
-    btn1= Button(root,image=img_btn1,borderwidth=0,command=lambda:add("1",answer,canva1))
+    btn1= Button(canva1,image=img_btn1,borderwidth=0,command=lambda:add("1",answer,canva1))
     btn1_window=canva1.create_window(200,200,anchor="center",window=btn1)
 
     # #btn1.grid(row=1,column=0,padx=3,pady=5)
@@ -153,10 +218,15 @@ def bullandcow(min,sec):
     # Resize the image using resize() method
     resize_image = imagecheck.resize((50, 50))
     img_btncheck = ImageTk.PhotoImage(resize_image)
-    btncheck= Button(canva1,image=img_btncheck,borderwidth=0,command=lambda:count(ch,number,canva1,nc,nb,answer) if(len(number)==4)else error() )
+    btncheck= Button(canva1,image=img_btncheck,borderwidth=0,command=lambda:count(ch,number,canva1,nc,nb,answer,tmp) if(len(number)==4)else error() )
     btncheck_window=canva1.create_window(320,380,anchor="center",window=btncheck)
-    if(min!=0):
-        temps(canva1,min,sec)
+    
+    imagecheck = (Image.open(r"py Game\images\about.png"))
+    # Resize the image using resize() method
+    resize_image = imagecheck.resize((50, 50))
+    img_btnh = ImageTk.PhotoImage(resize_image)
+    btnhist= Button(canva1,image=img_btnh,borderwidth=0,command=lambda:showHistory() )
+    btncheck_window=canva1.create_window(260,440,anchor="center",window=btnhist)
 
         
 
@@ -164,22 +234,15 @@ def bullandcow(min,sec):
     root.mainloop()
 
 
-def done(title,msg):
-    response=messagebox.askquestion(title,msg)
-    print(response)
-    if response==messagebox.YES:
-        root.destroy()
-        play(sound,m,s)
-    else:
-        root.destroy()
 
 
 def play(music,min,sec):
-    global ch,trial,root,number,m,s,sound
+    global ch,trial,root,number,m,s,sound,l
     sound=music
     m=min
     s=sec
     number=''
+    l=[]
     root=tkinter.Tk()
     if(music):
         mixer.init()
@@ -188,6 +251,7 @@ def play(music,min,sec):
 
     cs=randint(1000, 9999)
     ch=str(cs)
+    print(ch)
     trial=0
     bullandcow(min,sec)
 
@@ -222,12 +286,22 @@ def show_result(nt,nv,canva,nc,nb):
 
 
     
-def count(ch,x,canva,nc,nb,answer):
+def count(ch,x,canva,nc,nb,answer,tmp):
+    res=open('py Game\cache\score.txt','r')
+    global l
+    f=[]
+    f=res.readlines()
     global number
     global trial
+    
     trial+=1
     if(ch==x):
         show_result(4,0,canva,nc,nb) 
+        tmp.stop()
+        f.append("\nuser: {}".format(tmp.minutes*60+tmp.seconds))
+        res=open('py Game\cache\score.txt','w')
+        res.writelines(f)
+        res.close()
         win()            
     else:
         nt=0
@@ -240,44 +314,14 @@ def count(ch,x,canva,nc,nb,answer):
                 else:
                     nv+=1
         show_result(nt,nv,canva,nc,nb)
+        l.append(number)
         number=''
         canva.itemconfig(answer,text=number)
 
         print(nt,nv)
-        if(trial<=1):
+        if(trial>=5):
+            tmp.stop()
             done('trialDone','you LOST! PLAY AGAIN')
-#bullandcow(2,0)
+    res.close()
 
-class temps:
-    def __init__(self, parent,min,sec):
-        # variable storing time
-        self.canva=parent
-        self.seconds=sec
-        self.minutes=min
-        # label displaying time
-        self.label = tkinter.Label(parent, text="{0:2d}:{0:2d}".format(min,sec), font="Arial 30",bg="#A7DFEE")
-        self.label.pack()
-        parent.create_window(40,35,anchor="center",window=self.label)
-        # start the timer
-        self.label.after(1000, self.refresh_label)
-
-    def refresh_label(self):
-        """ refresh the content of the label every second """
-        # increment the time
-        time=self.minutes*60+self.seconds
-        if(time==0):
-            done("LOST","TIME'S UP")
-        print(time)
-        time -= 1
-        print(time)
-        min,sec=divmod(time,60)
-        self.seconds=sec
-        self.minutes=min
-        print(min,sec)
-        remaining="{:02d}:{:02d}".format(min,sec)
-        # display the new time
-        self.label.configure(text=remaining)
-        # request tkinter to call self.refresh after 1s (the delay is given in ms)
-        self.label.after(1000, self.refresh_label)
-
-      
+play(False,1,0)
