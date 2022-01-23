@@ -175,16 +175,19 @@ def play():
     global ch
     cs=randint(1000, 9999)
     ch=str(cs)
-    essai=5
     bullandcow()
 
-def done():
-    response=messagebox.askquestion("trialDone","you LOST! PLAY AGAIN")
+def done(title,msg):
+    response=messagebox.askquestion(title,msg)
+    print(response)
     if response==1:
         play()
     else:
         root.destroy()
-        
+def win():
+    messagebox.showinfo("WIN",'CONGRATS! YOU WON!')  
+    done("PLAY AGAIN","PLAY AGAIN ?")
+
 def show_result(nt,nv,canva,nc,nb):
     
     bull=PhotoImage(file=r'py Game\images\bull.png')
@@ -217,7 +220,8 @@ def count(ch,x,canva,nc,nb,answer):
     trial+=1
     if(trial<6):
         if(ch==x):
-            show_result(4,0,canva,nc,nb)             
+            show_result(4,0,canva,nc,nb) 
+            win()            
         else:
             nt=0
             nv=0
@@ -234,7 +238,7 @@ def count(ch,x,canva,nc,nb,answer):
 
             print(nt,nv)
     else:
-        done()
+        done('trialDone','you LOST! PLAY AGAIN')
 bullandcow()
 """ 
 while(essai<6):
