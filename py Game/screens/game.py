@@ -324,4 +324,3 @@ def count(ch,x,canva,nc,nb,answer,tmp):
             done('trialDone','you LOST! PLAY AGAIN')
     res.close()
 
-play(False,1,0)
