@@ -1,8 +1,10 @@
+from turtle import home
 import pygame
 from game import play
 from tkinter import *
 from tkinter import ttk
-
+from about import about
+import var
 
 pygame.init()
 
@@ -30,17 +32,19 @@ class button:
     def show(self):
         self.screen.blit(self.surface, (self.x, self.y))
 
-    def music(self, event,bol):
+    def music(self, event,bol,width,height):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
                     if(bol):
                         pygame.mixer.music.pause()
-                        return False
+                        var.bol=False
+                        b=pygame.draw.line(self.screen,'white',(width-100,height-(height//5)-90),(width+60,height-(height//5)+20),10)
                     else:
                         pygame.mixer.music.unpause()
-                        return True
+                        var.bol=True
+                        b=pygame.draw.line(self.screen,'green',(width-100,height-(height//5)-90),(width+60,height-(height//5)+20),10)
 
     def click(self, event):
         x, y = pygame.mouse.get_pos()
@@ -55,15 +59,11 @@ class button:
                 if self.rect.collidepoint(x, y):
                     pygame.quit()
     def about(self,event):
-        tk = Tk()
-
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
-                    popup=tk.Tk()
-                    popup.wm_title('about')
-                    label=ttk
+                    about()
 
 
 

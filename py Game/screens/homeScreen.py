@@ -4,6 +4,7 @@ from button import button
 from window import window
 import ctypes
 import os
+import var
 
 user32 = ctypes.windll.user32
 width1, height1 = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
@@ -44,14 +45,16 @@ button4=button((width-60,height-(height//5)-50),30,play4,screen)
 
 play5= pygame.image.load('py Game\images\\about.png')
 button5=button((width-60,height-(height//5)+50),30,play5,screen)
-bol=True
 pygame.init()
+
+
 screen.blit(background,(0,0))
 button1.draw()
 button2.draw()
 button3.draw()
 button4.draw()
 button5.draw()
+#pygame.draw.line(screen,'white',(width-100,height-(height//5)-90),(width+60,height-(height//5)+20),10)
 while running:
     
     #button6.draw()
@@ -61,7 +64,7 @@ while running:
         button1.click(event)
         button2.click(event)
         button3.clickExit(event)
-        button4.music(event,bol)
+        button4.music(event,var.bol,width=width,height=height)
         button5.about(event)
     pygame.display.update()
     pygame.display.flip()    

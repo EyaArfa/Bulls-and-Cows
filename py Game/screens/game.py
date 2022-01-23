@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jan 19 21:29:59 2022
-
-@author: EYA
-"""
 from operator import truediv
 from random  import randint
 from window import window
