@@ -1,2 +1,2 @@
-oussema: 30sec
-eya: 1min
+user: 55
+user: 38
