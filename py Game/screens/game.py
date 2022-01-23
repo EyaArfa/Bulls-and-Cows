@@ -12,7 +12,6 @@ trial=0
 l=[]
 def done(title,msg):
     response=messagebox.askquestion(title,msg)
-    print(response)
     if response==messagebox.YES:
         root.destroy()
         play(sound,m,s)
@@ -24,7 +23,7 @@ def Desired_font(x):
     return (tkinter.font.Font( family = "Comic Sans MS", size = x, weight = "bold"))
 
 class temps:
-    def __init__(self, parent,min,sec):
+    def __init__(self, parent,min=0,sec=0):
         # variable storing time
         self.state=True
         self.canva=parent
@@ -35,7 +34,8 @@ class temps:
         self.label.pack()
         parent.create_window(75,35,anchor="center",window=self.label)
         # start the timer
-        self.label.after(1000, self.refresh_label)
+        if(min!=0 or sec!=0):
+            self.label.after(1000, self.refresh_label)
 
     def refresh_label(self):
         """ refresh the content of the label every second """
@@ -44,13 +44,10 @@ class temps:
             time=self.minutes*60+self.seconds
             if(time==0):
                 timesup("LOST","TIME'S UP")
-            print(time)
             time -= 1
-            print(time)
             min,sec=divmod(time,60)
             self.seconds=sec
             self.minutes=min
-            print(min,sec)
             remaining="{:02d}:{:02d}".format(min,sec)
             # display the new time
             self.label.configure(text=remaining)
@@ -62,9 +59,7 @@ class temps:
       
 
 
-# cs=randint(1000, 9999)
-# ch=str(cs)
-# print(ch)
+
 ch=''
 
 def error():
@@ -75,13 +70,11 @@ def add(value,answer,canva1):
     if(len(number)<4):
         number+=value
         canva1.itemconfig(answer,text=number)
-    print(number)
 
 def clear(answer,canva1):
     global number
     number=number[0:len(number)-1] 
     canva1.itemconfig(answer,text=number) 
-    print(number) 
 
 def showHistory():
     top = Toplevel()
@@ -116,8 +109,7 @@ def bullandcow(min,sec):
     bg=PhotoImage(file='py Game\images\Sans titre.png')
     canva1.create_image( 0, 0, image = bg, anchor = "nw")
     
-    if(min!=0):
-        tmp=temps(canva1,min,sec)
+    tmp=temps(canva1,min,sec)
     answer=canva1.create_text(260,140,text='',font=Desired_font(50),fill="#F1E755")
     # # Read  Image1
     image1 = (Image.open(r"py Game\images\num1.png"))
@@ -251,7 +243,6 @@ def play(music,min,sec):
 
     cs=randint(1000, 9999)
     ch=str(cs)
-    print(ch)
     trial=0
     bullandcow(min,sec)
 
@@ -318,7 +309,6 @@ def count(ch,x,canva,nc,nb,answer,tmp):
         number=''
         canva.itemconfig(answer,text=number)
 
-        print(nt,nv)
         if(trial>=5):
             tmp.stop()
             done('trialDone','you LOST! PLAY AGAIN')
