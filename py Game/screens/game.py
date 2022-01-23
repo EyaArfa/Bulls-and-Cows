@@ -225,7 +225,7 @@ def count(ch,x,canva,nc,nb,answer):
             for i in range(len(x)):
                 if (x[i] in ch):
                     if(ch[i]==x[i]):
-                    x    nt+=1
+                        nt+=1
                     else:
                         nv+=1
             show_result(nt,nv,canva,nc,nb)
