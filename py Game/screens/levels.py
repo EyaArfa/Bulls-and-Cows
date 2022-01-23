@@ -2,9 +2,7 @@ import os
 from tkinter import Button, Canvas, Image, PhotoImage
 import tkinter
 from PIL import Image,ImageTk
-from game import *
 import ctypes
-
 master = tkinter.Tk()
 user32 = ctypes.windll.user32
 width1, height1 = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
@@ -17,6 +15,8 @@ def med(music):
 def hard(music):
     master.destroy()
     play(music,min=1,sec=0)
+from game import play
+
 def levels(music):
     width=(width1//3)*2
     height=(height1//3)*2
@@ -33,8 +33,8 @@ def levels(music):
     canva1=Canvas(master,width=width,height=height)
     canva1.pack(fill = "both", expand = True)
     #display image
-    back=PhotoImage(file='py Game\images\Sans titre.png')
-    canva1.create_image( 0, 0, image=back, anchor = "nw")
+    # back=PhotoImage(file=r'"C:\Users\EYA\Documents\Ing\FIA1\ParadigmeDeProgrammation\TP\MyPyGame-main\MyPyGame\py Game\images\bulls-and-cows-android.jpg"')
+    # canva1.create_image(0,0,image=back, anchor = "nw")
     
     # # Read  Image1
     image1 = (Image.open(r"py Game\images\easy.png"))
@@ -58,4 +58,4 @@ def levels(music):
     btnhard= Button(master,image=imghard,borderwidth=0,command=lambda:hard(music))
     btnhard_window=canva1.create_window(width//10+300,height//2.5,anchor="center",window=btnhard)
     master.mainloop()   
-levels(True)
+# levels(True)

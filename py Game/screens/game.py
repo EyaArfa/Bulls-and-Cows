@@ -3,32 +3,36 @@ from tkinter import ANCHOR, CENTER, Button, Canvas, Label, PhotoImage, messagebo
 from pygame import mixer
 import tkinter.font
 from PIL import Image,ImageTk
-import temps
-from functions import *
-
+sound=False
+m=0
+s=0
 number=""
 trial=0
-cs=randint(1000, 9999)
-ch=str(cs)
-print(ch)
+# cs=randint(1000, 9999)
+# ch=str(cs)
+# print(ch)
 ch=''
 root=tkinter.Tk()
+
 def error():
     messagebox.showerror("error","ENTER 4 DIGIT NUMBER")
- 
+
 def add(value,answer,canva1):
     global number
     if(len(number)<4):
         number+=value
         canva1.itemconfig(answer,text=number)
     print(number)
+
 def clear(answer,canva1):
     global number
     number=number[0:len(number)-1] 
     canva1.itemconfig(answer,text=number) 
     print(number) 
+
 def Desired_font(x):
     return (tkinter.font.Font( family = "Comic Sans MS", size = x, weight = "bold"))
+
 def bullandcow(min,sec):
     
     #create object
@@ -158,8 +162,23 @@ def bullandcow(min,sec):
 
 
     root.mainloop()
+
+
+def done(title,msg):
+    response=messagebox.askquestion(title,msg)
+    print(response)
+    if response==messagebox.YES:
+        root.destroy()
+        play(sound,m,s)
+    else:
+        root.destroy()
+
+
 def play(music,min,sec):
-    global ch,trial,root,number
+    global ch,trial,root,number,m,s,sound
+    sound=music
+    m=min
+    s=sec
     number=''
     root=tkinter.Tk()
     if(music):
@@ -175,7 +194,7 @@ def play(music,min,sec):
 
 def win():
     messagebox.showinfo("WIN",'CONGRATS! YOU WON!')  
-    done(root,"PLAY AGAIN","PLAY AGAIN ?")
+    done("PLAY AGAIN","PLAY AGAIN ?")
 
 def show_result(nt,nv,canva,nc,nb):
     
@@ -228,16 +247,37 @@ def count(ch,x,canva,nc,nb,answer):
         if(trial<=1):
             done('trialDone','you LOST! PLAY AGAIN')
 #bullandcow(2,0)
-""" 
-while(essai<6):
-        if(count(ch,x)==(4,0)):
-           print("you won!") 
-           break
-        else:
-           l=count(ch,x)
-           print('{}T,{}V'.format(l[0], l[1]))
-           x=str(input("try again "))
-           essai+=1 """
 
+class temps:
+    def __init__(self, parent,min,sec):
+        # variable storing time
+        self.canva=parent
+        self.seconds=sec
+        self.minutes=min
+        # label displaying time
+        self.label = tkinter.Label(parent, text="{0:2d}:{0:2d}".format(min,sec), font="Arial 30",bg="#A7DFEE")
+        self.label.pack()
+        parent.create_window(40,35,anchor="center",window=self.label)
+        # start the timer
+        self.label.after(1000, self.refresh_label)
 
+    def refresh_label(self):
+        """ refresh the content of the label every second """
+        # increment the time
+        time=self.minutes*60+self.seconds
+        if(time==0):
+            done("LOST","TIME'S UP")
+        print(time)
+        time -= 1
+        print(time)
+        min,sec=divmod(time,60)
+        self.seconds=sec
+        self.minutes=min
+        print(min,sec)
+        remaining="{:02d}:{:02d}".format(min,sec)
+        # display the new time
+        self.label.configure(text=remaining)
+        # request tkinter to call self.refresh after 1s (the delay is given in ms)
+        self.label.after(1000, self.refresh_label)
 
+      
