@@ -62,7 +62,7 @@ while running:
         if event.type==pygame.QUIT:
             running=False
         button1.click(event)
-        button2.click(event)
+        button2.clickHigh(event)
         button3.clickExit(event)
         button4.music(event,var.bol,width=width,height=height)
         button5.about(event)

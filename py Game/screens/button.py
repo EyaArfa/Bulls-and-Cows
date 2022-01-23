@@ -4,6 +4,7 @@ from game import play
 from tkinter import *
 from tkinter import ttk
 from about import about
+from highScore import high
 import var
 
 pygame.init()
@@ -52,6 +53,12 @@ class button:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
                     play()
+    def clickHigh(self, event):
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    high()
     def clickExit(self, event):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
