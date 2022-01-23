@@ -54,7 +54,6 @@ button2.draw()
 button3.draw()
 button4.draw()
 button5.draw()
-#pygame.draw.line(screen,'white',(width-100,height-(height//5)-90),(width+60,height-(height//5)+20),10)
 while running:
     
     #button6.draw()
@@ -68,12 +67,7 @@ while running:
         button5.about(event)
     pygame.display.update()
     pygame.display.flip()    
-    # button1.show()
-    # button2.show()
-    # button3.show()
-    # button1.changeColor(pygame.mouse.get_pos())
-    # button2.changeColor(pygame.mouse.get_pos())
-    # button3.changeColor(pygame.mouse.get_pos())    
+     
 pygame.quit()
 
 
