@@ -62,6 +62,7 @@ while running:
         button2.click(event)
         button3.clickExit(event)
         button4.music(event,bol)
+        button5.about(event)
     pygame.display.update()
     pygame.display.flip()    
     # button1.show()

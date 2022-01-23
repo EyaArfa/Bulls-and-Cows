@@ -1,5 +1,9 @@
 import pygame
 from game import play
+from tkinter import *
+from tkinter import ttk
+
+
 pygame.init()
 
 
@@ -50,6 +54,18 @@ class button:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
                     pygame.quit()
+    def about(self,event):
+        tk = Tk()
+
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    popup=tk.Tk()
+                    popup.wm_title('about')
+                    label=ttk
+
+
 
     def changeColor(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
