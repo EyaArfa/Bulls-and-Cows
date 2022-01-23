@@ -14,14 +14,17 @@ import pygame
 import sys
 import tkinter.font
 from PIL import Image,ImageTk
+
 number=""
 trial=0
 cs=randint(1000, 9999)
 ch=str(cs)
 print(ch)
 # ch=''
+root=tkinter.Tk()
 def error():
     messagebox.showerror("error","ENTER 4 DIGIT NUMBER")
+  
 def add(value,answer,canva1):
     global number
     if(len(number)<4):
@@ -37,7 +40,7 @@ def clear(answer,canva1):
 def bullandcow():
     
     #create object
-    root=tkinter.Tk()
+    
     #define a title for the window
     root.title('vache&taureau')
     #adjust size
@@ -174,6 +177,14 @@ def play():
     ch=str(cs)
     essai=5
     bullandcow()
+
+def done():
+    response=messagebox.askquestion("trialDone","you LOST! PLAY AGAIN")
+    if response==1:
+        play()
+    else:
+        root.destroy()
+        
 def show_result(nt,nv,canva,nc,nb):
     
     bull=PhotoImage(file=r'py Game\images\bull.png')
@@ -204,23 +215,26 @@ def count(ch,x,canva,nc,nb,answer):
     global number
     global trial
     trial+=1
-    if(ch==x):
-        show_result(4,0,canva,nc,nb)             
-    else:
-        nt=0
-        nv=0
-        for i in x:
-            if (i in ch) :
-                pos=ch.index(i)
-                if(pos==x.index(i)):
-                    nt+=1
-                else:
-                    nv+=1
-        show_result(nt,nv,canva,nc,nb)
-        number=''
-        canva.itemconfig(answer,text=number)
+    if(trial<6):
+        if(ch==x):
+            show_result(4,0,canva,nc,nb)             
+        else:
+            nt=0
+            nv=0
+            
+            for i in range(len(x)):
+                if (x[i] in ch):
+                    if(ch[i]==x[i]):
+                        nt+=1
+                    else:
+                        nv+=1
+            show_result(nt,nv,canva,nc,nb)
+            number=''
+            canva.itemconfig(answer,text=number)
 
-        print(nt,nv)
+            print(nt,nv)
+    else:
+        done()
 bullandcow()
 """ 
 while(essai<6):
