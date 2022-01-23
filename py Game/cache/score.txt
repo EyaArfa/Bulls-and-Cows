@@ -1,0 +1,2 @@
+oussema: 30sec
+eya: 1min

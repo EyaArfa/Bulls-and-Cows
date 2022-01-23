@@ -1,42 +1,79 @@
 import pygame
+from pygame import mixer
 from button import button
 from window import window
-pygame.init() #initialize the pygame library
+import ctypes
+import os
+import var
 
-screen = pygame.display.set_mode((800, 800))
-pygame.display.set_caption("Button!")
-main_font = pygame.font.SysFont("cambria", 50)
+user32 = ctypes.windll.user32
+width1, height1 = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
+ #initialize the pygame library
+width=(width1//3)*2
+height=(height1//3)*2
+x=(width1//2)-(width//2)
+y=height1-height
+screen = pygame.display.set_mode((width, height))
 
-fen=window()
-background=pygame.image.load(r'py Game\images\bulls-and-cows-android.jpg')
+os.environ['SDL_VIDEO_WINDOW_POS'] = '%i,%i' % (x,y)
+os.environ['SDL_VIDEO_CENTERED'] = '0'
+
+pygame.display.flip()
+background=pygame.image.load(r'py Game\images\bg.png')
+background = pygame.transform.scale(background, (width, height))
+
 running=True
-bt=pygame.image.load(r'py Game\images\button.png')
-bt=pygame.transform.scale(bt, (400, 150))
-play= pygame.image.load('py Game\images\start.png')
-button1=button((220,220),30,play,fen.screen)
-# button2=button((220,260),30,bt,fen.screen)
-# button3=button((220,300),30,bt,fen.screen)
+
+mixer.init()
+mixer.music.load('py Game\music\\bensound-summer_mp3_music.mp3')
+mixer.music.play()
+
+play1= pygame.image.load('py Game\images\start.png')
+button1=button((width//2,height-(height//5)-120),30,play1,screen)
+
+play2= pygame.image.load('py Game\images\HS.png')
+button2=button((width//2,height-(height//5)-20),30,play2,screen)
+
+play3= pygame.image.load('py Game\images\HS.png')
+button3=button((width//2,height-(height//5)+80),30,play3,screen)
+
+play4= pygame.image.load('py Game\images\sound.png')
+button4=button((width-60,height-(height//5)-50),30,play4,screen)
+
+#play6= pygame.image.load('py Game\images\\mute.png')
+#button6=button((width-60,height-(height//5)-50),30,play6,screen)
+
+play5= pygame.image.load('py Game\images\\about.png')
+button5=button((width-60,height-(height//5)+50),30,play5,screen)
+pygame.init()
+
+
+screen.blit(background,(0,0))
+button1.draw()
+button2.draw()
+button3.draw()
+button4.draw()
+button5.draw()
+#pygame.draw.line(screen,'white',(width-100,height-(height//5)-90),(width+60,height-(height//5)+20),10)
 while running:
-    fen.screen.fill((0,0,0))
-    fen.screen.blit(background,(0,0))
-    button1.draw()
-    # button2.draw()
-    # button3.draw()
+    
+    #button6.draw()
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             running=False
         button1.click(event)
-        # button2.click(event)
-        # button3.clickExit(event)
+        button2.clickHigh(event)
+        button3.clickExit(event)
+        button4.music(event,var.bol,width=width,height=height)
+        button5.about(event)
+    pygame.display.update()
+    pygame.display.flip()    
     # button1.show()
     # button2.show()
     # button3.show()
     # button1.changeColor(pygame.mouse.get_pos())
     # button2.changeColor(pygame.mouse.get_pos())
-    # button3.changeColor(pygame.mouse.get_pos())
-
-    pygame.display.update()
-    pygame.display.flip()
+    # button3.changeColor(pygame.mouse.get_pos())    
 pygame.quit()
 
 
